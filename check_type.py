@@ -16,25 +16,31 @@ def decorator_factory(correct_type: type):
         :return:The function it gets.
         """
         @wraps(func)
-        def type_check(obj: object):
+        def type_check(object_to_check_type: object):
             """
-        Checks whether the function receives the correct type object  according to the decorator if no error is sent.
-            :param obj: Object to test
+            Checks whether the function receives the correct type object according to the decorator if no error is sent.
+            :param object_to_check_type: Object to check type.
             :return:None
             """
-            if type(obj) != correct_type:
-                raise Exception('Wrong object type')
-            return func(obj)
+            if type(object_to_check_type) != correct_type:
+                raise Exception("Wrong object type")
+            return func(object_to_check_type)
         return type_check
     return decorator
 
 
-@decorator_factory(int)
-def times2(num):
-    return num*2
+@decorator_factory(list)
+def average_calculation(list_of_numbers: list) -> float:
+    """
+    A function that gets a list of numbers and returns their average.
+    :param list_of_numbers:List of numbers to calculate average.
+    :return:Average of the list numbers.
+    """
+    return sum(list_of_numbers)/len(list_of_numbers)
 
 
 if __name__ == '__main__':
-    print(times2(2))
-    save_num = times2("ortal")
-    print(save_num)
+    list_of_numbers_to_average = [1, 2, 3, 4]
+    name = "ortal"
+    print(average_calculation(list_of_numbers_to_average))
+    print(average_calculation(name))
